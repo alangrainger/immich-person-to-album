@@ -39,3 +39,4 @@ process.on('SIGTERM', () => {
 })
 
 cron.schedule(pta.config.schedule || '0,30 * * * *', main)
+console.log('Waiting for next scheduled task...')
