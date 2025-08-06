@@ -1,0 +1,4 @@
+.idea/
+.env
+node_modules/
+/data/
