@@ -1,5 +1,5 @@
 {
-  "immichServer": "http://192.168.70.60:8020",
+  "immichServer": "http://192.168.0.20:2283",
   "schedule": "*/30 * * * *",
   "users": [
     {
