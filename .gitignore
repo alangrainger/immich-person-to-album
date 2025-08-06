@@ -1,5 +1,5 @@
 .idea/
 .env
 node_modules/
-/data/
 config.json
+store.json

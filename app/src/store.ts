@@ -7,7 +7,7 @@ export class JSONKeyValueStore<T = any> {
   cache: Map<string, T>
 
   constructor () {
-    this.filePath = path.resolve('./data/store.json')
+    this.filePath = path.resolve('../data/store.json')
     this.cache = new Map<string, T>()
     try {
       const data = fs.readFileSync(this.filePath, 'utf8')

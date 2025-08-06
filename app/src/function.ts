@@ -1,8 +1,7 @@
 import { Link, Config } from './types'
 import { addAssetsToAlbum, searchAssets } from '@immich/sdk'
 import store from './store'
-
-// require('dotenv').config()
+import path from 'path'
 
 export class PersonToAlbum {
   config: Config
@@ -20,7 +19,7 @@ export class PersonToAlbum {
         // Attempt to parse docker-compose config string into JSON (if specified)
         this.config = JSON.parse(process.env.CONFIG)
       } else {
-        const configJson = require('../config.json')
+        const configJson = require(path.resolve('../data/config.json'))
         if (typeof configJson === 'object') this.config = configJson
       }
     } catch (e) {

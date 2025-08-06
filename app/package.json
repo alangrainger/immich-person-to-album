@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "npx tsc",
+    "test": "podman build --build-arg PACKAGE_VERSION=$(npm pkg get version | xargs) --format docker -t immich-person-test .. && podman run --init -it -p=3000:3000 -v ../data:/data:Z --restart=always immich-person-test",
     "start": "node dist/index.js"
   },
   "author": "Alan Grainger",
@@ -17,8 +18,8 @@
   "bin": "dist/index.js",
   "dependencies": {
     "tslib": "^2.8.1",
-    "dotenv": "^16.4.5",
-    "@immich/sdk": "^1.137.3"
+    "@immich/sdk": "^1.137.3",
+    "node-cron": "^4.2.1"
   },
   "devDependencies": {
     "@types/node": "^16.18.111",
