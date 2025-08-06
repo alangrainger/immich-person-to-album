@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { personConfig } from './types'
+import { Link } from './types'
 
 export class JSONKeyValueStore<T = any> {
   filePath: string
@@ -33,7 +33,7 @@ export class JSONKeyValueStore<T = any> {
     await this.persist()
   }
 
-  personKey (param: personConfig) {
+  updateKey (param: Link) {
     return param.personId + ':' + param.albumId
   }
 }

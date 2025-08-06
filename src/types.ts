@@ -1,4 +1,16 @@
-export interface personConfig {
+export interface Config {
+  immichServer: string;
+  users: User[]
+}
+
+export interface User {
+  apiKey: string;
+  personLinks: Link[]
+}
+
+export interface Link {
+  description?: string;
   personId: string;
   albumId: string;
+  apiKeyShort: string;
 }

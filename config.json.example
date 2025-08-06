@@ -1,0 +1,15 @@
+{
+  "immichServer": "http://192.168.70.60:8020",
+  "users": [
+    {
+      "apiKey": "",
+      "personLinks": [
+        {
+          "description": "Photos of Joe",
+          "personId": "Joe's person ID",
+          "albumId": "Shared album ID"
+        }
+      ]
+    }
+  ]
+}
