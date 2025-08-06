@@ -18,8 +18,10 @@ async function processPerson (param: personConfig) {
   let nextPage: string | null = '1'
   let mostRecent
 
+  console.log(`Adding person ${param.personId} to album ${param.albumId}`)
+
   while (nextPage !== null) {
-    console.log(`Processing page ${nextPage} of person ${param.personId}`)
+    console.log(`- Processing page ${nextPage}`)
     const res = await searchAssets({
       metadataSearchDto: {
         // I'm using `updated` here because this is documented to be the time when
