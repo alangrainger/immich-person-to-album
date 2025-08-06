@@ -1,5 +1,6 @@
 export interface Config {
   immichServer: string;
+  schedule: string;
   users: User[]
 }
 

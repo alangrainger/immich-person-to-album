@@ -1,5 +1,6 @@
 {
   "immichServer": "http://192.168.70.60:8020",
+  "schedule": "*/30 * * * *",
   "users": [
     {
       "apiKey": "",
