@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "npx tsc",
-    "test": "podman build --build-arg PACKAGE_VERSION=$(npm pkg get version | xargs) --format docker -t immich-person-test .. && podman run --init -it -p=3000:3000 -v ../data:/data:Z --restart=always immich-person-test",
+    "test": "podman build --build-arg PACKAGE_VERSION=$(npm pkg get version | xargs) --format docker -t immich-person-test .. && podman run --init -it -p=3000:3000 --userns=keep-id -v ../data:/data:Z --restart=always immich-person-test",
     "start": "node dist/index.js"
   },
   "author": "Alan Grainger",
