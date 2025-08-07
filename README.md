@@ -1,13 +1,12 @@
 # Immich automatic Person -> Album
 
-Automatically add people (faces) to an album and keep that album up-to-date.
-
-This allows you to share that automatic person album with another user (for example, a share album of your children).
+Automatically add people (faces) to an album and keep that album up-to-date. You can then share that automatic person-album 
+with another user (for example, a shared album of your children).
 
 You can arbitrarily add any face/person to any album. So you could make a "Family" album which contains all your family 
 members and is automatically updated.
 
-You can also use API keys from any number of Immich users, so the one Docker container can handle doing automatic
+You can use API keys from any number of Immich users, so the one Docker container can handle doing automatic
 albums for all your users.
 
 ## Setup
