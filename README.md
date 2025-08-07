@@ -4,12 +4,12 @@
 
 Take a copy of the [docker-compose.yml](https://github.com/alangrainger/immich-person-to-album/blob/main/docker-compose.yml) file.
 
-There are two methods for specifying the config options.
+There are two methods for specifying the config options:
 
 #### `config.json` file
 
 1. In the folder which contains your `docker-compose.yml` file, create a `data` folder.
-   2 .Inside the `data` folder, put a copy of [config.json](https://github.com/alangrainger/immich-person-to-album/blob/main/data/config.json.example).
+2. Inside the `data` folder, put a copy of [config.json](https://github.com/alangrainger/immich-person-to-album/blob/main/data/config.json.example).
 3. Edit the `config.json` file as required.
 
 #### Inline configuration
