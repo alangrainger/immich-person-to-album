@@ -1,6 +1,6 @@
 # Immich automatic Person -> Album
 
-Automatically add people to an album and keep that album up-to-date.
+Automatically add people (faces) to an album and keep that album up-to-date.
 
 This allows you to share that automatic person album with another user (for example, a share album of your children).
 
