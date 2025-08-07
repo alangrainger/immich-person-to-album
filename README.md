@@ -1,4 +1,4 @@
-# Immich Person -> Album
+# Immich automatic Person -> Album
 
 Automatically add people to an album and keep that album up-to-day.
 
