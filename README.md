@@ -1,3 +1,11 @@
+# Immich Person -> Album
+
+Automatically add people to an album and keep that album up-to-day.
+
+This allows you to share that automatic person album with another user (for example, a share album of your children).
+
+You can arbitrarily add any face/person to any album. So you could make a "Family" album which contains all your family members and is automatically updated.
+
 ## Setup
 
 ### Docker-compose configuration
@@ -8,7 +16,7 @@ There are two methods for specifying the config options:
 
 #### `config.json` file
 
-1. In the folder which contains your `docker-compose.yml` file, create a `data` folder.
+1. In the folder which contains your `docker-compose.yml` file, create a `/data/` folder.
 2. Inside the `data` folder, put a copy of [config.json](https://github.com/alangrainger/immich-person-to-album/blob/main/data/config.json.example).
 3. Edit the `config.json` file as required.
 
