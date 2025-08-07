@@ -22,6 +22,7 @@ async function main () {
       }
     }
   }
+  console.log('Waiting for next scheduled task...')
 }
 
 // Send the correct process error code for any uncaught exceptions
@@ -39,5 +40,9 @@ process.on('SIGTERM', () => {
   process.exit(0)
 })
 
-cron.schedule(pta.config.schedule || '0,30 * * * *', main)
-console.log('Waiting for next scheduled task...')
+// Run on startup
+main()
+  .then(() => {
+    // Then afterwards run on a schedule
+    cron.schedule(pta.config.schedule || '0,30 * * * *', main)
+  })
