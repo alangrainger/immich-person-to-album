@@ -25,16 +25,11 @@ There are two methods for specifying the config options:
 
 #### Inline configuration
 
-Alternatively, you can add the configuration inline in your `docker-compose.yml` file like this:
+Alternatively, you can add the configuration inline in a `docker-compose.override.yml` file like this:
 
 ```yaml
 services:
   immich-person-to-album:
-    image: alangrainger/immich-person-to-album:latest
-    container_name: immich-person-to-album
-    restart: always
-    volumes:
-      - ./data:/data
     environment:
       CONFIG: |
         {
@@ -54,6 +49,7 @@ services:
           ]
         }
 ```
+That way, you can keep getting updates for the script, without having to merge any changes.
 
 ### Create an API key
 
