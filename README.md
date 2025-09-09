@@ -81,6 +81,16 @@ Album IDs:
 - Example URL: http://your-server/albums/ff85e8c5-32e6-49e0-a0ad-e4dd7ef66bce
 - Album ID: ff85e8c5-32e6-49e0-a0ad-e4dd7ef66bce
 
+## Troubleshooting
+
+Make sure you can access your Immich API from inside the `immich-person-to-album` container. Run this command from outside the container, making sure to replace the address with your Immich server address:
+
+```bash
+docker exec immich-person-to-album sh -c "wget -qO- http://192.168.0.20:2283/api/server/ping"
+```
+
+It will return `{"res":"pong"}` if Immich is accessible to the `immich-person-to-album` container.
+
 ## Acknowledgements
 
 Thanks to https://github.com/ajb3932/immich-partner-sharing for the idea and for some of the readme text.
