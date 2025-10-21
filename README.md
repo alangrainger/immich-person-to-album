@@ -11,8 +11,6 @@ albums for all your users.
 
 ## Setup
 
-### Docker-compose configuration
-
 Take a copy of the [docker-compose.yml](https://github.com/alangrainger/immich-person-to-album/blob/main/docker-compose.yml) file.
 
 ```yaml
@@ -26,13 +24,13 @@ services:
 
 There are two methods for specifying the config options:
 
-#### `config.json` file
+### Configure via `config.json` file
 
 1. In the folder which contains your `docker-compose.yml` file, create a `/data/` folder.
 2. Inside the `data` folder, put a copy of [config.json](https://github.com/alangrainger/immich-person-to-album/blob/main/data/config.json.example).
 3. Edit the `config.json` file as required.
 
-#### Inline configuration
+### ...or via Inline configuration
 
 Alternatively, you can add the configuration inline in your `docker-compose.yml` file like this:
 
