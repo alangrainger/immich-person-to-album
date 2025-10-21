@@ -19,7 +19,6 @@ Take a copy of the [docker-compose.yml](https://github.com/alangrainger/immich-p
 services:
   immich-person-to-album:
     image: alangrainger/immich-person-to-album:latest
-    container_name: immich-person-to-album
     restart: always
     volumes:
       - ./data:/data
