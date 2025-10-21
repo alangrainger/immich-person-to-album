@@ -42,12 +42,12 @@ services:
           "schedule": "*/30 * * * *",
           "users": [
             {
-              "apiKey": "XXXXXXXXXX",
+              "apiKey": "XXXXXXXXXX",       # Immich user's API key (read-only access)
               "personLinks": [
                 {
                   "description": "Photos of Joe",
-                  "personId": "YYYYYYYYYY Joe's person ID",
-                  "albumId": "ZZZZZZZZZZ Shared album ID"
+                  "personId": "YYYYYYYYYY", # Joe's person ID
+                  "albumId": "ZZZZZZZZZZ"   # Shared album ID
                 }
               ]
             }
