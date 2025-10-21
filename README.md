@@ -94,3 +94,5 @@ It will return `{"res":"pong"}` if Immich is accessible to the `immich-person-to
 ## Acknowledgements
 
 Thanks to https://github.com/ajb3932/immich-partner-sharing for the idea and for some of the readme text.
+
+The only reason for making this project is that at time of release, the above project [hadn't been updated](https://github.com/ajb3932/immich-partner-sharing/issues/4) to support Immich 2.x.
