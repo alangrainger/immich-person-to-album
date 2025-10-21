@@ -15,6 +15,16 @@ albums for all your users.
 
 Take a copy of the [docker-compose.yml](https://github.com/alangrainger/immich-person-to-album/blob/main/docker-compose.yml) file.
 
+```yaml
+services:
+  immich-person-to-album:
+    image: alangrainger/immich-person-to-album:latest
+    container_name: immich-person-to-album
+    restart: always
+    volumes:
+      - ./data:/data
+```
+
 There are two methods for specifying the config options:
 
 #### `config.json` file
@@ -28,11 +38,6 @@ There are two methods for specifying the config options:
 Alternatively, you can add the configuration inline in your `docker-compose.yml` file like this:
 
 ```yaml
-services:
-  immich-person-to-album:
-    image: alangrainger/immich-person-to-album:latest
-    container_name: immich-person-to-album
-    restart: always
     volumes:
       - ./data:/data
     environment:
