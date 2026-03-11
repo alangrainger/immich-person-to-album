@@ -48,6 +48,12 @@ export class PersonToAlbum {
           personIds: [link.personId]
         }
       })
+	  
+	  if (!res.assets || res.assets.length === 0) {
+	    console.log(`No assets found for this person, skipping`);
+		return;
+	  }
+	  
       // Track the most recent photo timestamp so we can update the store
       if (!mostRecent) mostRecent = res.assets.items[0].updatedAt
 
