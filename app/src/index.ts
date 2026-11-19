@@ -30,10 +30,8 @@ async function main () {
 
     // Process each of the person-album linkages
     for (const link of user.personLinks) {
-      // Populate a truncated API key which will be used in the store.json key name
-      link.apiKeyShort = user.apiKey.slice(0, 6)
       try {
-        await pta.processPerson(link)
+        await pta.processLink(link)
       } catch (e) {
         console.log(e)
       }

@@ -1,7 +1,9 @@
-import { Link, Config } from './types'
-import { addAssetsToAlbum, searchAssets } from '@immich/sdk'
-import store from './store'
+import { Link, LinkConfig, Config } from './types'
+import { addAssetsToAlbum, AssetResponseDto, IdsFilter, searchAssets } from '@immich/sdk'
 import path from 'path'
+
+/** Maximum number of assets in one search page, and in one add-to-album request */
+const PAGE_SIZE = 1000
 
 export class PersonToAlbum {
   config: Config
@@ -28,47 +30,79 @@ export class PersonToAlbum {
     }
   }
 
-  async processPerson (link: Link) {
-    let nextPage: string | null = '1'
-    let mostRecent
+  /**
+   * Apply the defaults to a config link and check its fields. Throws if the link is invalid.
+   */
+  normaliseLink (config: LinkConfig): Link {
+    const personIds = config.personIds ?? (config.personId ? [config.personId] : [])
+    const logic = config.logic ?? 'OR'
+    const excludePersonIds = config.excludePersonIds ?? []
 
-    if (link.description) console.log(`=== ${link.description} ===`)
-    console.log(`Adding person ${link.personId} to album ${link.albumId}`)
+    if (!config.albumId) throw new Error('Invalid link: albumId is missing')
+    if (!personIds.length) throw new Error('Invalid link: personIds is empty')
+    if (logic !== 'AND' && logic !== 'OR') throw new Error(`Invalid link: logic must be AND or OR, not ${logic}`)
+    const overlap = personIds.filter(id => excludePersonIds.includes(id))
+    if (overlap.length) throw new Error(`Invalid link: ${overlap.join(', ')} is in personIds and excludePersonIds`)
 
-    while (nextPage !== null) {
-      console.log(` - Processing page ${nextPage}`)
+    return {
+      description: config.description,
+      albumId: config.albumId,
+      personIds,
+      logic,
+      excludePersonIds,
+      noOtherPeople: config.noOtherPeople === true
+    }
+  }
+
+  async processLink (config: LinkConfig) {
+    if (config.description) console.log(`=== ${config.description} ===`)
+    const link = this.normaliseLink(config)
+    console.log(`Adding ${link.logic} of people ${link.personIds.join(', ')} to album ${link.albumId}`)
+
+    const personIds: IdsFilter = link.logic === 'AND' ? { all: link.personIds } : { any: link.personIds }
+    if (link.excludePersonIds.length) personIds.none = link.excludePersonIds
+
+    /*
+    The search cursor is an offset. The album filter removes assets from the results
+    as soon as they go into the album, so collect every page before adding any assets.
+    */
+    const ids: string[] = []
+    let cursor: string | undefined
+    do {
       const res = await searchAssets({
         metadataSearchDto: {
-          // I'm using `updated` here because this is documented to be the time when
-          // the asset was updated in Immich, and nothing to do with the EXIF data.
-          // https://immich.app/docs/api/get-asset-info
-          // This may also be the case for `created`, but it doesn't specify that in the docs.
-          updatedAfter: store.get(this.getUpdateKeyName(link)),
-          page: parseInt(nextPage, 10), // why is `nextPage` a string and `page` a number? ¯\_(ツ)_/¯
-          personIds: [link.personId]
+          filter: {
+            personIds,
+            albumIds: { none: [link.albumId] }
+          },
+          withPeople: link.noOtherPeople || undefined,
+          size: PAGE_SIZE,
+          cursor
         }
       })
-      // Track the most recent photo timestamp so we can update the store
-      if (!mostRecent) mostRecent = res.assets.items[0].updatedAt
+      ids.push(...this.applyNoOtherPeople(link, res.assets.items).map(x => x.id))
+      cursor = res.assets.nextCursor ?? undefined
+    } while (cursor)
 
+    for (let i = 0; i < ids.length; i += PAGE_SIZE) {
       await addAssetsToAlbum({
         id: link.albumId,
-        bulkIdsDto: {
-          ids: res.assets.items.map(x => x.id)
-        }
+        bulkIdsDto: { ids: ids.slice(i, i + PAGE_SIZE) }
       })
-      nextPage = res.assets.nextPage
     }
-
-    // Store the most recent asset update value so we can start processing only newer items next time.
-    await store.set(this.getUpdateKeyName(link), mostRecent)
+    console.log(` - Added ${ids.length} assets`)
     console.log()
   }
 
   /**
-   * Get the correctly formatted key name for most-recent updated value in the store
+   * When `noOtherPeople` is set, remove the assets that contain a person who is not in `personIds`
    */
-  getUpdateKeyName (link: Link) {
-    return [link.apiKeyShort, link.personId, link.albumId].join(':')
+  applyNoOtherPeople (link: Link, assets: AssetResponseDto[]) {
+    if (!link.noOtherPeople) return assets
+    return assets.filter(asset => {
+      // Each search result contains a person from the link, so an empty list means Immich did not send the people
+      if (!asset.people?.length) throw new Error(`Immich returned no people for asset ${asset.id}. Check the API key permissions.`)
+      return asset.people.every(person => link.personIds.includes(person.id))
+    })
   }
 }

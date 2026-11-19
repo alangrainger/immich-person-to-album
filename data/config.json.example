@@ -7,8 +7,15 @@
       "personLinks": [
         {
           "description": "Photos of Joe",
-          "personId": "Joe's person ID",
-          "albumId": "Shared album ID"
+          "albumId": "Shared album ID",
+          "personIds": ["Joe's person ID"]
+        },
+        {
+          "description": "Joe and Anna together, with nobody else",
+          "albumId": "Another shared album ID",
+          "personIds": ["Joe's person ID", "Anna's person ID"],
+          "logic": "AND",
+          "noOtherPeople": true
         }
       ]
     }

@@ -6,8 +6,13 @@ with another user (for example, a shared album of your children).
 You can arbitrarily add any face/person to any album. So you could make a "Family" album which contains all your family 
 members and is automatically updated.
 
+Each album can match people with `AND` logic (for example, only photos with both of your children together) or `OR`
+logic (photos with any of them). You can also exclude people, or only allow photos with nobody else in them.
+
 You can use API keys from any number of Immich users, so the one Docker container can handle doing automatic
 albums for all your users.
+
+**Requires Immich v3.2 or later.** If you are on an older Immich server, use image tag `1.0.2`.
 
 ## Setup
 
@@ -47,15 +52,32 @@ Alternatively, you can add the configuration inline in your `docker-compose.yml`
               "apiKey": "XXXXXXXXXX",       # Immich user's API key (read-only access)
               "personLinks": [
                 {
-                  "description": "Photos of Joe",
-                  "personId": "YYYYYYYYYY", # Joe's person ID
-                  "albumId": "ZZZZZZZZZZ"   # Shared album ID
+                  "description": "Joe and Anna together",
+                  "albumId": "ZZZZZZZZZZ",                    # Shared album ID
+                  "personIds": ["YYYYYYYYYY", "WWWWWWWWWW"],  # Joe's and Anna's person IDs
+                  "logic": "AND"
                 }
               ]
             }
           ]
         }
 ```
+
+### Person link options
+
+| Field | Required | Default | Meaning |
+|---|---|---|---|
+| `albumId` | Yes | | The album to add photos to. |
+| `personIds` | Yes | | A list of one or more person IDs. |
+| `logic` | No | `OR` | `AND` needs every person in the photo. `OR` needs at least one of them. |
+| `excludePersonIds` | No | `[]` | Photos containing any of these people are not added. |
+| `noOtherPeople` | No | `false` | When `true`, photos containing anyone not in `personIds` are not added. |
+| `description` | No | | Text shown in the log. |
+
+- The old single `personId` field still works.
+- You can point two links at the same album to combine different rules.
+- `noOtherPeople` only counts faces that have been assigned to a person. Unnamed faces and hidden people do not block a photo.
+- Photos are only ever added to an album, never removed.
 
 ### Create an API key
 
