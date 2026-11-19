@@ -4,4 +4,4 @@ services:
     container_name: immich-person-to-album
     restart: always
     volumes:
-      - ./data:/data
+      - ./config.json:/data/config.json:ro

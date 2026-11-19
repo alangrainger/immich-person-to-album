@@ -24,24 +24,21 @@ services:
     image: alangrainger/immich-person-to-album:latest
     restart: always
     volumes:
-      - ./data:/data
+      - ./config.json:/data/config.json:ro
 ```
 
 There are two methods for specifying the config options:
 
 ### Configure via `config.json` file
 
-1. In the folder which contains your `docker-compose.yml` file, create a `/data/` folder.
-2. Inside the `data` folder, put a copy of [config.json](https://github.com/alangrainger/immich-person-to-album/blob/main/data/config.json.example).
-3. Edit the `config.json` file as required.
+1. Next to your `docker-compose.yml` file, put a copy of [config.json](https://github.com/alangrainger/immich-person-to-album/blob/main/data/config.json.example).
+2. Edit the `config.json` file as required.
 
 ### ...or via Inline configuration
 
-Alternatively, you can add the configuration inline in your `docker-compose.yml` file like this:
+Alternatively, you can add the configuration inline in your `docker-compose.yml` file instead of the `volumes` section, like this:
 
 ```yaml
-    volumes:
-      - ./data:/data
     environment:
       CONFIG: |
         {
