@@ -23,6 +23,7 @@ export interface LinkConfig {
   logic?: Logic;
   excludePersonIds?: string[];
   noOtherPeople?: boolean;
+  removeUnmatched?: boolean;
 }
 
 /**
@@ -35,4 +36,5 @@ export interface Link {
   logic: Logic;
   excludePersonIds: string[];
   noOtherPeople: boolean;
+  removeUnmatched: boolean;
 }

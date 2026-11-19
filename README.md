@@ -69,12 +69,27 @@ Alternatively, you can add the configuration inline in your `docker-compose.yml`
 | `logic` | No | `OR` | `AND` needs every person in the photo. `OR` needs at least one of them. |
 | `excludePersonIds` | No | `[]` | Photos containing any of these people are not added. |
 | `noOtherPeople` | No | `false` | When `true`, photos containing anyone not in `personIds` are not added. |
+| `removeUnmatched` | No | `false` | When `true`, photos that no longer match are removed from the album. See below. |
 | `description` | No | | Text shown in the log. |
 
 - The old single `personId` field still works.
 - You can point two links at the same album to combine different rules.
 - `noOtherPeople` only counts faces that have been assigned to a person. Unnamed faces and hidden people do not block a photo.
-- Photos are only ever added to an album, never removed.
+- Photos are only ever added to an album, never removed, unless you set `removeUnmatched`.
+
+### Removing photos that no longer match
+
+Set `"removeUnmatched": true` on a link to keep its album in sync. This is useful after you fix a wrongly tagged face.
+
+- The API key also needs the `albumAsset.delete` and `user.read` permissions. `user.read` is used to find out which
+  user the API key belongs to, so that photos added to the album by other users are left alone.
+- **Any of your photos in the album that do not match the link are removed, including photos you added by hand.**
+  Comments and likes on a removed photo may be lost.
+- Photos that other users added to a shared album are never removed.
+- If several links point at the same album, a photo is removed only when it matches none of them.
+- If a person ID in the album's links has no photos at all (for example, after you merge two people), nothing is
+  removed and a warning is logged. Fix the person ID in your config.
+- Photos that only fail the `noOtherPeople` check are not removed.
 
 ### Create an API key
 
@@ -84,7 +99,7 @@ Alternatively, you can add the configuration inline in your `docker-compose.yml`
 4. Go to API Keys
 5. Click **New API Key**
 6. Give it a name
-7. Add the permissions of `asset.read` and `albumAsset.create`
+7. Add the permissions of `asset.read` and `albumAsset.create` (plus `albumAsset.delete` and `user.read` if you use `removeUnmatched`)
 8. Click **Create**
 9. Copy the new API key and put it in your config file 
 

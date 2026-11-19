@@ -36,6 +36,13 @@ async function main () {
         console.log(e)
       }
     }
+
+    // Remove the assets that no longer match, for the links that ask for it
+    try {
+      await pta.removeUnmatched(user.personLinks)
+    } catch (e) {
+      console.log(e)
+    }
   }
   console.log('Waiting for next scheduled task...')
 }
