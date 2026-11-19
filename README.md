@@ -52,7 +52,8 @@ Alternatively, you can add the configuration inline in your `docker-compose.yml`
                   "description": "Joe and Anna together",
                   "albumId": "ZZZZZZZZZZ",                    # Shared album ID
                   "personIds": ["YYYYYYYYYY", "WWWWWWWWWW"],  # Joe's and Anna's person IDs
-                  "logic": "AND"
+                  "logic": "AND",
+                  "noOtherPeople": true
                 }
               ]
             }
