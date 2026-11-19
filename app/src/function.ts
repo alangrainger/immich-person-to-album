@@ -44,12 +44,13 @@ export class PersonToAlbum {
    */
   normaliseLink (config: LinkConfig): Link {
     const personIds = config.personIds ?? (config.personId ? [config.personId] : [])
-    const logic = config.logic ?? 'OR'
+    // The logic makes no difference for one person, so it is only necessary for two or more
+    const logic = config.logic ?? (personIds.length === 1 ? 'OR' : undefined)
     const excludePersonIds = config.excludePersonIds ?? []
 
     if (!config.albumId) throw new Error('Invalid link: albumId is missing')
     if (!personIds.length) throw new Error('Invalid link: personIds is empty')
-    if (logic !== 'AND' && logic !== 'OR') throw new Error(`Invalid link: logic must be AND or OR, not ${logic}`)
+    if (logic !== 'AND' && logic !== 'OR') throw new Error(`Invalid link: set logic to AND or OR, not ${logic}`)
     const overlap = personIds.filter(id => excludePersonIds.includes(id))
     if (overlap.length) throw new Error(`Invalid link: ${overlap.join(', ')} is in personIds and excludePersonIds`)
 

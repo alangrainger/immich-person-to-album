@@ -67,7 +67,7 @@ Alternatively, you can add the configuration inline in your `docker-compose.yml`
 |---|---|---|---|
 | `albumId` | Yes | | The album to add photos to. |
 | `personIds` | Yes | | A list of one or more person IDs. |
-| `logic` | No | `OR` | `AND` needs every person in the photo. `OR` needs at least one of them. |
+| `logic` | With 2+ people | | `AND` needs every person in the photo. `OR` needs at least one of them. Required when `personIds` has more than one person. |
 | `excludePersonIds` | No | `[]` | Photos containing any of these people are not added. |
 | `noOtherPeople` | No | `false` | When `true`, photos containing anyone not in `personIds` are not added. |
 | `removeUnmatched` | No | `false` | When `true`, photos that no longer match are removed from the album. See below. |
